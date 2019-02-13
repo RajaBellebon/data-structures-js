@@ -4,12 +4,12 @@ const cases = require('jest-in-case');
 cases(
   'Create Grades',
   opts => {
-    expect(createGradeObject(Object.keys(opts.grades)[0], opts.grades)).toHaveLength(opts.expected);
+    expect(createGradeObject(Object.keys(opts.grades)[0], opts.grades).length).toBe(opts.expected);
   },
   [
-    { name: '1 Student', grades: {"josef": [78, 75, 95]}, expected: 3 },
-    { name: '2 Students', grades: {"josef": [78, 75, 95], "jerome": [71, 50, 80, 59]}, expected: 3 },
-    { name: '2+ Students', grades: {"josef": [78, 75, 95], "jerome": [71, 50, 80, 59], "marc": [85, 75] }, expected: 3 },
+    { name: 'Josef', grades:  {"josef":[78, 75, 95]}, expected: 3 },
+    { name: 'Jerome', grades:  {"jerome":[78, 75, 95, 71, 50, 80, 59]}, expected: 7 },
+    { name: 'Marc', grades:  {"marc":[78, 75, 95, 85, 75]}, expected: 5 },
   ],
 );
 
@@ -22,5 +22,16 @@ cases(
     { name: '1 Student', grades: {"josef": ''}},
     { name: '2 Students', grades: {"josef": '', "jerome":''}},
     { name: '2+ Students', grades: {"josef": '', "jerome":'', "marc": '' }},
+  ],
+);
+cases(
+  'Average Grades',
+  opts => {
+    expect(averageGrades(opts.grades)).toBe(opts.expected);
+  },
+  [
+    { name: '1 Student', grades: [78, 75, 95], expected: "82.7" },
+    { name: '2 Students', grades: [78, 75, 95, 71, 50, 80, 59], expected: "72.6" },
+    { name: '2+ Students', grades: [78, 75, 95, 85, 75], expected: "81.6" },
   ],
 );
